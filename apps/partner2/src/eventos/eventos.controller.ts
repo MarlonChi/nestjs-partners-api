@@ -7,14 +7,13 @@ import {
   Param,
   Delete,
   HttpCode,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { EventsService } from '@app/core/events/events.service';
 import { CriarEventoRequest } from './request/criar-evento.request';
 import { AtualizarEventoRequest } from './request/atualizar-evento.request';
 import { ReservarLugarRequest } from './request/reservar-lugar.request';
 import { TicketKind } from '@prisma/client';
-import { AuthGuard } from '@app/core/auth/auth.guard';
 
 @Controller('eventos')
 export class EventosControllers {
@@ -26,7 +25,7 @@ export class EventosControllers {
       name: criarEventoRequest.nome,
       description: criarEventoRequest.descricao,
       date: criarEventoRequest.data,
-      price: criarEventoRequest.preco,
+      price: criarEventoRequest.preco
     });
   }
 
@@ -43,13 +42,13 @@ export class EventosControllers {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() atualizarEventoRequest: AtualizarEventoRequest,
+    @Body() atualizarEventoRequest: AtualizarEventoRequest
   ) {
     return this.eventsService.update(id, {
       name: atualizarEventoRequest.nome,
       description: atualizarEventoRequest.descricao,
       date: atualizarEventoRequest.data,
-      price: atualizarEventoRequest.preco,
+      price: atualizarEventoRequest.preco
     });
   }
 
@@ -59,11 +58,10 @@ export class EventosControllers {
     return this.eventsService.remove(id);
   }
 
-  @UseGuards(AuthGuard)
   @Post(':id/reservar')
   reserveSpots(
     @Body() reservarLugarRequest: ReservarLugarRequest,
-    @Param('id') eventId: string,
+    @Param('id') eventId: string
   ) {
     return this.eventsService.reserveSpot({
       eventId,
@@ -72,7 +70,7 @@ export class EventosControllers {
         reservarLugarRequest.tipo_ingresso === 'inteira'
           ? TicketKind.full
           : TicketKind.half,
-      email: reservarLugarRequest.email,
+      email: reservarLugarRequest.email
     });
   }
 }
