@@ -1,7 +1,7 @@
 # NestJS Partners API
 
 ## Description
-
+Project developed with NestJs in FullCycle Imersion.
 
 ## Installation
 
